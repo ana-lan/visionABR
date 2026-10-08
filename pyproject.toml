@@ -1,0 +1,30 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "visionabr"
+version = "0.0.1"
+description = "Load-aware image resolution gateway for vLLM vision-language model serving (early development)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Anagha Langhe" }]
+keywords = ["vllm", "vision-language-model", "inference", "serving", "adaptive-bitrate"]
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Programming Language :: Python :: 3",
+    "Intended Audience :: Developers",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+# No runtime dependencies yet. fastapi and httpx arrive in Phase 1.
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/ana-lan/visionabr"
+Repository = "https://github.com/ana-lan/visionabr"
+
+[tool.hatch.build.targets.wheel]
+# Tells hatchling where the package lives (src layout).
+packages = ["src/visionabr"]
