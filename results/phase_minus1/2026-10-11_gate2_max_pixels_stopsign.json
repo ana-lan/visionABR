@@ -1,0 +1,93 @@
+{
+  "test": "gate2_per_request_max_pixels",
+  "timestamp": "2026-10-11T19:57:10.775944+00:00",
+  "versions": {
+    "python": "3.13.15",
+    "vllm": "0.30.0",
+    "torch": "2.13.0+cu130",
+    "cuda": "13.0",
+    "transformers": "5.18.0",
+    "gpu": "NVIDIA L4",
+    "model": "Qwen/Qwen2.5-VL-3B-Instruct"
+  },
+  "config": {
+    "server_args": [
+      "--max-model-len",
+      "16384",
+      "--gpu-memory-utilization",
+      "0.85",
+      "--port",
+      "8000"
+    ],
+    "image": "vllm ImageAsset stop_sign, JPEG quality 95, base64 data URL (same image every request)",
+    "image_size_wh": [
+      1300,
+      876
+    ],
+    "prompt": "Describe this image in one sentence.",
+    "temperature": 0,
+    "max_tokens": 60,
+    "streaming": false,
+    "text_only_prompt_tokens": 26,
+    "server_restarts_between_sizes": 0
+  },
+  "raw": [
+    {
+      "size": "full",
+      "max_pixels": null,
+      "prompt_tokens": 1454,
+      "image_tokens_incl_markers": 1428,
+      "predicted": 1428,
+      "resized_wh": [
+        1288,
+        868
+      ],
+      "answer": "A stop sign is in front of a red and gold gate with Chinese characters on it."
+    },
+    {
+      "size": "~1024",
+      "max_pixels": 802816,
+      "prompt_tokens": 1016,
+      "image_tokens_incl_markers": 990,
+      "predicted": 990,
+      "resized_wh": [
+        1064,
+        728
+      ],
+      "answer": "A stop sign is in front of a Chinese style building."
+    },
+    {
+      "size": "~512",
+      "max_pixels": 401408,
+      "prompt_tokens": 514,
+      "image_tokens_incl_markers": 488,
+      "predicted": 488,
+      "resized_wh": [
+        756,
+        504
+      ],
+      "answer": "A stop sign is in front of a Chinese style archway."
+    },
+    {
+      "size": "~256",
+      "max_pixels": 200704,
+      "prompt_tokens": 275,
+      "image_tokens_incl_markers": 249,
+      "predicted": 249,
+      "resized_wh": [
+        532,
+        364
+      ],
+      "answer": "A stop sign is in front of a Chinese restaurant."
+    }
+  ],
+  "summary": {
+    "image_tokens": {
+      "full": 1428,
+      "~1024": 990,
+      "~512": 488,
+      "~256": 249
+    },
+    "all_match_resize_rule": true
+  }
+}
