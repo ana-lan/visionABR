@@ -1,0 +1,447 @@
+{
+  "test": "gate4_mixed_sizes_cache_trap",
+  "timestamp": "2026-10-11T21:55:05.521129+00:00",
+  "versions": {
+    "python": "3.13.15",
+    "vllm": "0.30.0",
+    "torch": "2.13.0+cu130",
+    "cuda": "13.0",
+    "transformers": "5.18.0",
+    "gpu": "NVIDIA L4",
+    "model": "Qwen/Qwen2.5-VL-3B-Instruct"
+  },
+  "config": {
+    "server_args": [
+      "--max-model-len",
+      "16384",
+      "--gpu-memory-utilization",
+      "0.85",
+      "--port",
+      "8000"
+    ],
+    "image": "stop_sign 1300x876, JPEG q95; 'same' = unmodified image, 'unique' = random 8x8 patch (numpy seed 4)",
+    "prompt": "Describe this image in one sentence.",
+    "temperature": 0,
+    "max_tokens": 30,
+    "streaming": false,
+    "phase_b_order": [
+      "full",
+      "~256",
+      "full",
+      "~256",
+      "~512",
+      "~1024",
+      "~256",
+      "full"
+    ],
+    "phase_c_seed": 4,
+    "phase_c_requests": 32
+  },
+  "cache_evidence": {
+    "metrics_lines": [
+      "vllm:kv_cache_usage_perc{engine=\"0\",model_name=\"Qwen/Qwen2.5-VL-3B-Instruct\"} 0.0",
+      "vllm:prefix_cache_queries_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-VL-3B-Instruct\"} 37506.0",
+      "vllm:prefix_cache_queries_created{engine=\"0\",model_name=\"Qwen/Qwen2.5-VL-3B-Instruct\"} 1.7917556428594155e+09",
+      "vllm:prefix_cache_hits_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-VL-3B-Instruct\"} 17568.0",
+      "vllm:prefix_cache_hits_created{engine=\"0\",model_name=\"Qwen/Qwen2.5-VL-3B-Instruct\"} 1.791755642859437e+09",
+      "vllm:external_prefix_cache_queries_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-VL-3B-Instruct\"} 0.0",
+      "vllm:external_prefix_cache_queries_created{engine=\"0\",model_name=\"Qwen/Qwen2.5-VL-3B-Instruct\"} 1.7917556428594556e+09",
+      "vllm:external_prefix_cache_hits_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-VL-3B-Instruct\"} 0.0",
+      "vllm:external_prefix_cache_hits_created{engine=\"0\",model_name=\"Qwen/Qwen2.5-VL-3B-Instruct\"} 1.7917556428594735e+09",
+      "vllm:mm_cache_queries_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-VL-3B-Instruct\"} 44.0",
+      "vllm:mm_cache_queries_created{engine=\"0\",model_name=\"Qwen/Qwen2.5-VL-3B-Instruct\"} 1.791755642859489e+09",
+      "vllm:mm_cache_hits_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-VL-3B-Instruct\"} 20.0",
+      "vllm:mm_cache_hits_created{engine=\"0\",model_name=\"Qwen/Qwen2.5-VL-3B-Instruct\"} 1.7917556428595047e+09",
+      "vllm:prompt_tokens_by_source_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-VL-3B-Instruct\",source=\"local_cache_hit\"} 17568.0",
+      "vllm:prompt_tokens_by_source_created{engine=\"0\",model_name=\"Qwen/Qwen2.5-VL-3B-Instruct\",source=\"local_cache_hit\"} 1.791755642859564e+09",
+      "vllm:prompt_tokens_cached_total{engine=\"0\",model_name=\"Qwen/Qwen2.5-VL-3B-Instruct\"} 17568.0",
+      "vllm:prompt_tokens_cached_created{engine=\"0\",model_name=\"Qwen/Qwen2.5-VL-3B-Instruct\"} 1.7917556428595862e+09",
+      "vllm:cache_config_info{_block_size_resolved=\"True\",block_size=\"16\",cache_dtype=\"auto\",enable_mamba_fine_grained_prefix_cache=\"False\",enable_prefix_caching=\"True\",engine=\"0\",gpu_memory_utilization=\"0.85\",is_attention_free=\"False\",kv_cache_dtype_skip_layers=\"[]\",kv_cache_layout=\"None\",kv_cache_max_concurrency=\"14.841796875\",kv_cache_memory_bytes=\"None\",kv_cache_size_tokens=\"243168\",kv_offloading_backend=\"native\",kv_offloading_size=\"None\",kv_sharing_fast_prefill=\"False\",mamba_block_size=\"None\",mamba_cache_dtype=\"auto\",mamba_cache_mode=\"none\",mamba_page_size_padded=\"None\",mamba_ssm_cache_dtype=\"auto\",num_cpu_blocks=\"None\",num_gpu_blocks=\"15198\",num_gpu_blocks_override=\"None\",prefix_cache_retention_interval=\"0\",prefix_caching_hash_algo=\"sha256\",prefix_match_unit=\"None\",replayssm_buffer_len=\"16\",skip_page_size_padded=\"None\",sliding_window=\"None\",use_kda_recoverssm=\"False\",use_replayssm=\"False\",user_specified_block_size=\"False\",user_specified_mamba_block_size=\"False\"} 1.0"
+    ],
+    "metric_says_on": true,
+    "log_says_on": true
+  },
+  "raw": {
+    "phase_a": [
+      {
+        "size": "full",
+        "prompt_tokens": 1454,
+        "matches_gate2": true,
+        "answer": "A stop sign is in front of a Chinese style building with a red stop sign and a black car parked on the street."
+      },
+      {
+        "size": "~1024",
+        "prompt_tokens": 1016,
+        "matches_gate2": true,
+        "answer": "A stop sign is in front of a Chinese style building."
+      },
+      {
+        "size": "~512",
+        "prompt_tokens": 514,
+        "matches_gate2": true,
+        "answer": "A stop sign is in front of a Chinese style archway."
+      },
+      {
+        "size": "~256",
+        "prompt_tokens": 275,
+        "matches_gate2": true,
+        "answer": "A stop sign is in front of a Chinese restaurant."
+      }
+    ],
+    "phase_b": [
+      {
+        "size": "full",
+        "prompt_tokens": 1454,
+        "ok": true,
+        "answer": "A stop sign is in front of a red and gold gate with Chinese characters on it."
+      },
+      {
+        "size": "~256",
+        "prompt_tokens": 275,
+        "ok": true,
+        "answer": "A stop sign is in front of a Chinese restaurant."
+      },
+      {
+        "size": "full",
+        "prompt_tokens": 1454,
+        "ok": true,
+        "answer": "A stop sign is in front of a red and gold gate with Chinese characters on it."
+      },
+      {
+        "size": "~256",
+        "prompt_tokens": 275,
+        "ok": true,
+        "answer": "A stop sign is in front of a Chinese restaurant."
+      },
+      {
+        "size": "~512",
+        "prompt_tokens": 514,
+        "ok": true,
+        "answer": "A stop sign is in front of a Chinese style archway."
+      },
+      {
+        "size": "~1024",
+        "prompt_tokens": 1016,
+        "ok": true,
+        "answer": "A stop sign is in front of a Chinese style building."
+      },
+      {
+        "size": "~256",
+        "prompt_tokens": 275,
+        "ok": true,
+        "answer": "A stop sign is in front of a Chinese restaurant."
+      },
+      {
+        "size": "full",
+        "prompt_tokens": 1454,
+        "ok": true,
+        "answer": "A stop sign is in front of a red and gold gate with Chinese characters on it."
+      }
+    ],
+    "phase_c": [
+      {
+        "size": "~1024",
+        "image": "same",
+        "prompt_tokens": 1016,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": true,
+        "answer": "A stop sign is in front of a Chinese style building."
+      },
+      {
+        "size": "~512",
+        "image": "unique",
+        "prompt_tokens": 514,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": null,
+        "answer": "A stop sign is in front of a Chinese style archway."
+      },
+      {
+        "size": "full",
+        "image": "same",
+        "prompt_tokens": 1454,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": true,
+        "answer": "A stop sign is in front of a red and gold gate with Chinese characters on it."
+      },
+      {
+        "size": "~256",
+        "image": "unique",
+        "prompt_tokens": 275,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": null,
+        "answer": "A stop sign is in front of a black car on a street with Chinese characters above it."
+      },
+      {
+        "size": "~256",
+        "image": "same",
+        "prompt_tokens": 275,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": true,
+        "answer": "A stop sign is in front of a Chinese restaurant."
+      },
+      {
+        "size": "~1024",
+        "image": "unique",
+        "prompt_tokens": 1016,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": null,
+        "answer": "A stop sign is in front of a Chinese style building."
+      },
+      {
+        "size": "full",
+        "image": "same",
+        "prompt_tokens": 1454,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": true,
+        "answer": "A stop sign is in front of a red and gold gate with Chinese characters on it."
+      },
+      {
+        "size": "full",
+        "image": "unique",
+        "prompt_tokens": 1454,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": null,
+        "answer": "A stop sign is in front of a Chinese style archway with the word \"stop\" on it."
+      },
+      {
+        "size": "full",
+        "image": "same",
+        "prompt_tokens": 1454,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": true,
+        "answer": "A stop sign is in front of a red and gold gate with Chinese characters on it."
+      },
+      {
+        "size": "~256",
+        "image": "unique",
+        "prompt_tokens": 275,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": null,
+        "answer": "A stop sign is in front of a black car on a street with Chinese characters above it."
+      },
+      {
+        "size": "~512",
+        "image": "same",
+        "prompt_tokens": 514,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": true,
+        "answer": "A stop sign is in front of a Chinese style archway."
+      },
+      {
+        "size": "full",
+        "image": "unique",
+        "prompt_tokens": 1454,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": null,
+        "answer": "A stop sign is in front of a Chinese style archway with the word \"stop\" on it."
+      },
+      {
+        "size": "~1024",
+        "image": "same",
+        "prompt_tokens": 1016,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": true,
+        "answer": "A stop sign is in front of a Chinese style building."
+      },
+      {
+        "size": "~512",
+        "image": "unique",
+        "prompt_tokens": 514,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": null,
+        "answer": "A stop sign is in front of a Chinese style building with a black van parked nearby."
+      },
+      {
+        "size": "~512",
+        "image": "same",
+        "prompt_tokens": 514,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": true,
+        "answer": "A stop sign is in front of a Chinese style archway."
+      },
+      {
+        "size": "~1024",
+        "image": "unique",
+        "prompt_tokens": 1016,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": null,
+        "answer": "A stop sign is in front of a Chinese style building."
+      },
+      {
+        "size": "full",
+        "image": "same",
+        "prompt_tokens": 1454,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": false,
+        "answer": "A stop sign is in front of a red and gold Chinese gate with the word \"stop\" on it."
+      },
+      {
+        "size": "~512",
+        "image": "unique",
+        "prompt_tokens": 514,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": null,
+        "answer": "A stop sign is in front of a Chinese style archway."
+      },
+      {
+        "size": "~1024",
+        "image": "same",
+        "prompt_tokens": 1016,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": true,
+        "answer": "A stop sign is in front of a Chinese style building."
+      },
+      {
+        "size": "full",
+        "image": "unique",
+        "prompt_tokens": 1454,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": null,
+        "answer": "A stop sign is in front of a Chinese style gate with the word \"stop\" on it."
+      },
+      {
+        "size": "~512",
+        "image": "same",
+        "prompt_tokens": 514,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": true,
+        "answer": "A stop sign is in front of a Chinese style archway."
+      },
+      {
+        "size": "~512",
+        "image": "unique",
+        "prompt_tokens": 514,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": null,
+        "answer": "A stop sign is in front of a Chinese style building with a black van parked nearby."
+      },
+      {
+        "size": "~1024",
+        "image": "same",
+        "prompt_tokens": 1016,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": true,
+        "answer": "A stop sign is in front of a Chinese style building."
+      },
+      {
+        "size": "~1024",
+        "image": "unique",
+        "prompt_tokens": 1016,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": null,
+        "answer": "A stop sign is in front of a Chinese style building."
+      },
+      {
+        "size": "~512",
+        "image": "same",
+        "prompt_tokens": 514,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": true,
+        "answer": "A stop sign is in front of a Chinese style archway."
+      },
+      {
+        "size": "~512",
+        "image": "unique",
+        "prompt_tokens": 514,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": null,
+        "answer": "A stop sign is in front of a Chinese style building."
+      },
+      {
+        "size": "~512",
+        "image": "same",
+        "prompt_tokens": 514,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": true,
+        "answer": "A stop sign is in front of a Chinese style archway."
+      },
+      {
+        "size": "full",
+        "image": "unique",
+        "prompt_tokens": 1454,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": null,
+        "answer": "A stop sign is in front of a Chinese style archway with the word \"stop\" on it."
+      },
+      {
+        "size": "~512",
+        "image": "same",
+        "prompt_tokens": 514,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": true,
+        "answer": "A stop sign is in front of a Chinese style archway."
+      },
+      {
+        "size": "~256",
+        "image": "unique",
+        "prompt_tokens": 275,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": null,
+        "answer": "A stop sign is in front of a black car on a street with Chinese writing on the buildings."
+      },
+      {
+        "size": "~1024",
+        "image": "same",
+        "prompt_tokens": 1016,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": true,
+        "answer": "A stop sign is in front of a Chinese style building."
+      },
+      {
+        "size": "~1024",
+        "image": "unique",
+        "prompt_tokens": 1016,
+        "tokens_ok": true,
+        "mentions_stop": true,
+        "same_answer_as_phase_b": null,
+        "answer": "A stop sign is in front of a Chinese style building."
+      }
+    ]
+  },
+  "summary": {
+    "expected_prompt_tokens": {
+      "full": 1454,
+      "~1024": 1016,
+      "~512": 514,
+      "~256": 275
+    },
+    "phase_b_mismatches": 0,
+    "phase_c_token_mismatches": 0,
+    "phase_c_answers_missing_stop": 0,
+    "phase_c_same_image_answer_diffs_info_only": 1,
+    "phase_c_errors": [],
+    "cache_on_confirmed": true,
+    "pass": true
+  }
+}
